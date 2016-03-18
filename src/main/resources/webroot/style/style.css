@@ -1,0 +1,19 @@
+/**
+* @author Robin Duda
+*
+* Polymer custom elements styling.
+**/
+
+paper-material {
+    background-color: #3a474c;
+}
+
+paper-input {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+paper-button {
+    margin: 0 auto auto;
+    width: 100%;
+}

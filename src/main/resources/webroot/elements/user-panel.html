@@ -1,0 +1,112 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+
+
+<link rel="import" href="../elements/vote-submit.html">
+
+<!--
+    @author Robin Duda
+    Polymer element for a simple admin-panel using iron-pages.
+ -->
+
+
+<dom-module id="user-panel">
+    <link rel="import" href="../style/melon.css" type="css">
+    <link rel="import" href="../style/style.css" type="css">
+    <template>
+        <style>
+            :host {
+                display: inline-block;
+            }
+
+            .container {
+                margin-top: 64px;
+                width: 675px;
+            }
+
+            .spacer {
+                height: 235px;
+            }
+
+            .id {
+                display: block;
+                width: 100%;
+                text-align: right;
+            }
+
+            .topic {
+                text-align: center;
+            }
+        </style>
+
+
+        <div class="container">
+
+            <paper-material elevation="3">
+
+                <paper-tabs selected="{{page}}" no-slide>
+                    <paper-tab><span class="topic">{{topic}}</span> <h6 class="id">{{id}}</h6></paper-tab>
+                </paper-tabs>
+
+                <iron-pages selected="{{page}}">
+                    <div>
+                        <paper-material elevation="0">
+                            <vote-submit></vote-submit>
+                        </paper-material>
+                    </div>
+                </iron-pages>
+
+            </paper-material>
+
+
+            <div class="spacer"></div>
+        </div>
+
+    </template>
+    <script>
+        Polymer({
+            is: 'user-panel',
+            ready: function () {
+                this.page = 0;
+                var self = this;
+
+                application.subscribe("card-event", function (event) {
+                    self.id = event.id;
+                    self.topic = "Summer vote";
+
+                    application.publish('vote-loaded', {
+                        id: event.id,
+                        topic: "Summer vote", options: [
+                            {
+                                name: "Political party",
+                                values: ["The pirate party", "The purple party", "The other party"]
+                            },
+                            {name: "Rate your e-vote experience", values: ["1", "2", "3", "4", "5"]}
+                        ]
+                    });
+                });
+
+                /*
+                 $.ajax({
+                 type: "GET",
+                 url: "/api/get/",
+                 contentType: "application/json; charset=utf-8",
+                 data: JSON.stringify({
+                 voting: self.voting,
+                 token: self.token
+                 }),
+                 success: function (data) {
+                 self.$['create-success'].open();
+                 },
+                 error: function (data) {
+                 // show modal big failure lel
+                 }
+                 });*/
+            }
+        });
+    </script>
+</dom-module>

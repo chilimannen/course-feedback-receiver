@@ -1,0 +1,21 @@
+html
+    head
+        meta(charset="utf-8")
+        script(src="resources/script/jquery-2.2.1.min.js")
+        script(src="resources/script/application.js")
+        script(src="resources/bower_components/webcomponentsjs/webcomponents.min.js")
+        | <link rel="import" href="resources/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+        | <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+        | <link rel="import" href="resources/elements/card-entry.html">
+        | <link rel="import" href="resources/elements/user-panel.html">
+        | <link rel="import" href="resources/elements/toolbar.html">
+        | <link rel="import" href="resources/elements/footer.html">
+        | <link rel="import" href="resources/style/melon.html">
+
+    body.layout.vertical.layout-start
+        header-toolbar.layout.vertical.fit
+            div#card-entry
+                card-entry
+            div#user-panel
+                user-panel.layout.horizontal.center-justified
+        footer-template
