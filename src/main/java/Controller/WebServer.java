@@ -1,6 +1,10 @@
 package Controller;
 
 import Configuration.Configuration;
+import Model.AsyncMasterClient;
+import Model.AsyncVotingStore;
+import Model.MasterClient;
+import Model.VotingDB;
 import io.vertx.core.Context;
 import io.vertx.core.Future;
 import io.vertx.core.Verticle;
@@ -8,6 +12,8 @@ import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.mongo.MongoClient;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
@@ -17,11 +23,32 @@ import io.vertx.ext.web.templ.JadeTemplateEngine;
  * Created by Robin on 2016-03-18.
  */
 public class WebServer implements Verticle {
+    private AsyncVotingStore votings;
+    private AsyncMasterClient client;
     private Vertx vertx;
+
+    public WebServer() {
+    }
+
+    public WebServer(AsyncVotingStore votings) {
+        this.votings = votings;
+    }
 
     @Override
     public void init(Vertx vertx, Context context) {
         this.vertx = vertx;
+
+        if (votings == null) {
+            votings = new VotingDB(
+                    MongoClient.createShared(vertx,
+                            new JsonObject()
+                                    .put("connection_string", Configuration.CONNECTION_STRING)
+                                    .put("db_name", Configuration.DB_NAME)
+                    )
+            );
+        }
+
+        client = new MasterClient(vertx);
     }
 
     @Override
@@ -31,6 +58,7 @@ public class WebServer implements Verticle {
 
         router.route().handler(BodyHandler.create());
 
+        new APIRouter(router, votings, client);
         setTemplating(router);
         setResources(router);
         setCatchAll(router);
@@ -40,8 +68,8 @@ public class WebServer implements Verticle {
     }
 
     @Override
-    public void stop(Future<Void> stopFuture) throws Exception {
-
+    public void stop(Future<Void> future) throws Exception {
+        future.complete();
     }
 
     private void setTemplating(Router router) {

@@ -85,6 +85,7 @@
                         <paper-item on-tap="select" flex horizontal layout center center-justified>
                             {{value}}
                             <input type="hidden" value="{{option.name}}" id="name">
+                            <input type="hidden" value="{{index}}" id="index">
                         </paper-item>
                     </template>
                 </paper-listbox>
@@ -96,7 +97,8 @@
 
         <!-- Status toasts. -->
         <paper-toast class="toast-success" id="create-success" text="The vote was created."></paper-toast>
-        <paper-toast class="toast-error" id="create-server-denied" text="Server failed to process voting."></paper-toast>
+        <paper-toast class="toast-error" id="create-server-denied"
+                     text="Server failed to process voting."></paper-toast>
 
         <paper-button raised class="primary flex" on-tap="submit">VOTE</paper-button>
         </paper-material>
@@ -123,9 +125,9 @@
             getSelectedAsArray: function () {
                 var options = [];
 
-                for (var key in this.selected) {
-                    if (this.selected.hasOwnProperty(key)) {
-                        options.push({name: key, value: this.selected[key]});
+                for (var query in this.selected) {
+                    if (this.selected.hasOwnProperty(query)) {
+                        options.push({option: query, value: this.selected[query], key: application.key});
                     }
                 }
                 return options;
@@ -134,15 +136,20 @@
             submit: function () {
                 var self = this;
 
+                console.log(JSON.stringify({
+                    vote: {
+                        id: application.id,
+                        options: self.getSelectedAsArray()
+                    }
+                }));
+
                 $.ajax({
                     type: "POST",
                     url: "/api/vote",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify({
-                        voting: {
-                            id: application.id,
-                            options: self.getSelectedAsArray()
-                        },
+                        id: application.id,
+                        options: self.getSelectedAsArray(),
                         key: application.key
                     }),
                     success: function () {
