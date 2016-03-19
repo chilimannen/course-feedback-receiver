@@ -5,7 +5,9 @@ import io.vertx.core.Future;
 
 
 /**
- * Created by Robin on 2016-03-18.
+ * @author Robin Duda
+ *
+ * Starts the webserver and the API.
  */
 public class Launcher extends AbstractVerticle {
 

@@ -1,5 +1,5 @@
 /**
- * Created by Robin on 2016-03-18.
+ * @author Robin Duda
  */
 
 var application = {

@@ -3,7 +3,9 @@ package Model;
 import java.util.ArrayList;
 
 /**
- * Created by Robin on 2016-03-19.
+ * @author Robin Duda
+ *
+ * A list of votes and selected options from a client.
  */
 public class Vote {
     private String id;

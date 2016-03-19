@@ -1,7 +1,9 @@
 package Model;
 
 /**
- * Created by Robin on 2016-03-19.
+ * @author Robin Duda
+ *
+ * An individual option in the vote.
  */
 public class Option {
     private String key;

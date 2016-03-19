@@ -20,7 +20,9 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.templ.JadeTemplateEngine;
 
 /**
- * Created by Robin on 2016-03-18.
+ * @author Robin Duda
+ *
+ * Webserver for the API.
  */
 public class WebServer implements Verticle {
     private AsyncVotingStore votings;

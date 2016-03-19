@@ -22,9 +22,10 @@ import java.time.Instant;
  *         <p>
  *         Tests the api methods for the controller service.
  *         <p>
- *         /list - list all votings with specified owner.
- *         /create - create a new voting
- *         /terminate - remove a voting and everything attached to it.
+ *         /vote - send a vote to the server.
+ *         /get - get voting details.
+ *         /add - create a new voting by the master
+ *         /terminate - remove a voting and everything attached to it by the master.
  */
 
 @RunWith(VertxUnitRunner.class)

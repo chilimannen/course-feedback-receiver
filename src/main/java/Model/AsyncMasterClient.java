@@ -7,10 +7,10 @@ package Model;
  */
 public interface AsyncMasterClient {
     /**
-     * Command a master to create a vote.
+     * Upload vote results to master.
      *
-     * @param votings store where the resultsl may be fetched.
-     * @param voting  to be created.
+     * @param votings store where the results may be fetched.
+     * @param voting  to be uploaded when its duration is out.
      */
     void upload(AsyncVotingStore votings, Voting voting);
 }

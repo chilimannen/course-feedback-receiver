@@ -16,14 +16,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Created by Robin on 2016-03-19.
+ * @author Robin Duda
+ *
+ * Tests the client to the master.
  */
 
 @RunWith(VertxUnitRunner.class)
 public class MasterClientTest {
     private Vertx vertx;
     private VotingDBMock database = new VotingDBMock();
-    private TokenFactory tokenFactory = new TokenFactory(Configuration.SERVER_SECRET);
 
     @Rule
     public Timeout timeout = Timeout.seconds(15);
@@ -32,7 +33,6 @@ public class MasterClientTest {
     public void setUp(TestContext context) {
         vertx = Vertx.vertx();
         vertx.deployVerticle(new WebServer(database), context.asyncAssertSuccess());
-        tokenFactory = new TokenFactory(Configuration.SERVER_SECRET);
     }
 
     @After
@@ -42,9 +42,7 @@ public class MasterClientTest {
 
 
     /**
-     * Confirm that voting results are transmitted to master after the voting expires.
-     *
-     * @param context
+     * Ensure that voting results are transmitted to master after the voting expires.
      */
     @Test
     public void shouldUploadVoteToMaster(TestContext context) {

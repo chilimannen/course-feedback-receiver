@@ -7,7 +7,7 @@ import io.vertx.ext.mongo.MongoClient;
 import io.vertx.ext.mongo.UpdateOptions;
 
 /**
- * Created by Robin on 2016-03-16.
+ * @author Robin Duda
  * <p/>
  * Async voting store implementation using MongoDB.
  */

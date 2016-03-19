@@ -1,7 +1,9 @@
 package Model;
 
 /**
- * Created by Robin on 2016-03-19.
+ * @author Robin Duda
+ *
+ * Throw when a voting does not exist.
  */
 public class AsyncVotingStoreMissingVotingException extends Throwable {
 }
