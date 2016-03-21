@@ -51,12 +51,12 @@ public class VotingDB implements AsyncVotingStore {
     }
 
     @Override
-    public void results(Future<VoteResult> future, String id) {
+    public void results(Future<VoteBallot> future, String id) {
         JsonObject query = new JsonObject().put("id", id);
 
         client.findOne(VOTES, query, null, result -> {
             if (result.succeeded())
-                future.complete((VoteResult) Serializer.unpack(result.result(), VoteResult.class));
+                future.complete((VoteBallot) Serializer.unpack(result.result(), VoteBallot.class));
             else
                 future.fail(result.cause());
         });

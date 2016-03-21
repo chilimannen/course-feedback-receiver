@@ -6,7 +6,7 @@ package Configuration;
  * Configuration file.
  */
 public class Configuration {
-    public static final int WEB_PORT = 9950;
+    public static final int WEB_PORT = 9450;
     public static final int MASTER_PORT = 9494;
     public static final String CONNECTION_STRING = "mongodb://localhost:27017/";
     public static final String DB_NAME = "vote";

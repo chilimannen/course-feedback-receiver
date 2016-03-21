@@ -7,14 +7,14 @@ import java.util.ArrayList;
  *
  * Contains the results of a voting.
  */
-public class VoteResult {
+public class VoteBallot {
     private String id;
     private ArrayList<Option> votes = new ArrayList<>();
 
-    public VoteResult() {
+    public VoteBallot() {
     }
 
-    public VoteResult(String id) {
+    public VoteBallot(String id) {
         this.id = id;
     }
 

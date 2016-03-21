@@ -1,7 +1,6 @@
 package Model;
 
 import Configuration.Configuration;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.Json;
@@ -23,13 +22,10 @@ public class MasterClient implements AsyncMasterClient {
     @Override
     public void upload(AsyncVotingStore votings, Voting voting) {
         vertx.setTimer(getMillisDuration(voting), event -> {
-            Future<VoteResult> storage = Future.future();
+            Future<VoteBallot> storage = Future.future();
 
             storage.setHandler(result -> {
                 vertx.createHttpClient().post(Configuration.MASTER_PORT, "localhost", "/api/upload", handler -> {
-                    if (handler.statusCode() == HttpResponseStatus.OK.code())
-                        votings.terminate(Future.future(), voting);
-
                 }).end(
                         new JsonObject()
                                 .put("token", getServerToken())

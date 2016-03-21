@@ -105,7 +105,7 @@ public class APITest {
     public void testAddNewVoting(TestContext context) {
         Async async = context.async();
 
-        vertx.createHttpClient().post(Configuration.WEB_PORT, "localhost", "/api/add", result -> {
+        vertx.createHttpClient().post(Configuration.WEB_PORT, "localhost", "/api/create", result -> {
             context.assertEquals(HttpResponseStatus.OK.code(), result.statusCode());
             async.complete();
         }).end(new JsonObject()
@@ -118,7 +118,7 @@ public class APITest {
     public void testAddNewVotingInvalidToken(TestContext context) {
         Async async = context.async();
 
-        vertx.createHttpClient().post(Configuration.WEB_PORT, "localhost", "/api/add", result -> {
+        vertx.createHttpClient().post(Configuration.WEB_PORT, "localhost", "/api/create", result -> {
             context.assertEquals(HttpResponseStatus.UNAUTHORIZED.code(), result.statusCode());
             async.complete();
         }).end(new JsonObject()

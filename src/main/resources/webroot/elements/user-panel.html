@@ -74,38 +74,24 @@
                 this.page = 0;
                 var self = this;
 
-                application.subscribe("card-event", function (event) {
-                    self.id = event.id;
-                    self.topic = "Summer vote";
+                application.subscribe('card-event', function (event) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/api/metadata/" + event.id,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            data = JSON.parse(data);
 
-                    application.publish('vote-loaded', {
-                        id: event.id,
-                        topic: "Summer vote", options: [
-                            {
-                                name: "Political party",
-                                values: ["The pirate party", "The purple party", "The other party"]
-                            },
-                            {name: "Rate your e-vote experience", values: ["1", "2", "3", "4", "5"]}
-                        ]
+                            self.id = data.id;
+                            self.topic = data.topic;
+
+                            application.publish('vote-loaded', data);
+                        },
+                        error: function (data) {
+                            // show modal big failure lel
+                        }
                     });
                 });
-
-                /*
-                 $.ajax({
-                 type: "GET",
-                 url: "/api/get/",
-                 contentType: "application/json; charset=utf-8",
-                 data: JSON.stringify({
-                 voting: self.voting,
-                 token: self.token
-                 }),
-                 success: function (data) {
-                 self.$['create-success'].open();
-                 },
-                 error: function (data) {
-                 // show modal big failure lel
-                 }
-                 });*/
             }
         });
     </script>

@@ -28,7 +28,7 @@ public interface AsyncVotingStore {
      * @param future
      * @param id     the id of the vote to retrieve.
      */
-    void results(Future<VoteResult> future, String id);
+    void results(Future<VoteBallot> future, String id);
 
     /**
      * Adds a new voting for record-keeping.

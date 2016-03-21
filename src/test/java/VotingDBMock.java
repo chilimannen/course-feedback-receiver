@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class VotingDBMock implements AsyncVotingStore {
     private ArrayList<Voting> votings = new ArrayList<>();
-    private ArrayList<VoteResult> votes = new ArrayList<>();
+    private ArrayList<VoteBallot> votes = new ArrayList<>();
 
     public VotingDBMock() {
         ArrayList<Query> options = new ArrayList<>();
@@ -39,7 +39,7 @@ public class VotingDBMock implements AsyncVotingStore {
                         .setOptions(options)
         );
         // upserted by mongodb
-        votes.add(new VoteResult("id"));
+        votes.add(new VoteBallot("id"));
 
         ArrayList<Option> voteList = new ArrayList<>();
         Option option = new Option();
@@ -78,7 +78,7 @@ public class VotingDBMock implements AsyncVotingStore {
     }
 
     @Override
-    public void results(Future<VoteResult> future, String id) {
+    public void results(Future<VoteBallot> future, String id) {
         future.complete(votes.get(0));
     }
 

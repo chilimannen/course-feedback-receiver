@@ -23,13 +23,13 @@ public class APIRouter {
         this.votings = votings;
         this.client = client;
 
-        router.post("/api/add").handler(this::add);
+        router.post("/api/create").handler(this::create);
         router.post("/api/vote").handler(this::vote);
         router.post("/api/terminate").handler(this::terminate);
         router.get("/api/metadata/:id").handler(this::metadata);
     }
 
-    private void add(RoutingContext context) {
+    private void create(RoutingContext context) {
         HttpServerResponse response = context.response();
 
         if (authorized(context)) {

@@ -2,7 +2,6 @@ import Configuration.Configuration;
 import Controller.WebServer;
 import Model.*;
 import io.netty.handler.codec.http.HttpResponseStatus;
-import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.unit.Async;
@@ -27,7 +26,7 @@ public class MasterClientTest {
     private VotingDBMock database = new VotingDBMock();
 
     @Rule
-    public Timeout timeout = Timeout.seconds(15);
+    public Timeout timeout = Timeout.seconds(10);
 
     @Before
     public void setUp(TestContext context) {
@@ -50,7 +49,7 @@ public class MasterClientTest {
 
         vertx.createHttpServer().requestHandler(request -> {
             request.bodyHandler(body -> {
-                VoteResult result = (VoteResult) Serializer.unpack(body.toJsonObject().getJsonObject("voting"), VoteResult.class);
+                VoteBallot result = (VoteBallot) Serializer.unpack(body.toJsonObject().getJsonObject("voting"), VoteBallot.class);
                 Token token = (Token) Serializer.unpack(body.toJsonObject().getJsonObject("token"), Token.class);
 
                 context.assertTrue(new TokenFactory(Configuration.SERVER_SECRET).verifyToken(token));
@@ -63,7 +62,7 @@ public class MasterClientTest {
         }).listen(Configuration.MASTER_PORT);
 
 
-        vertx.createHttpClient().post(Configuration.WEB_PORT, "localhost", "/api/add", result -> {
+        vertx.createHttpClient().post(Configuration.WEB_PORT, "localhost", "/api/create", result -> {
             context.assertEquals(HttpResponseStatus.OK.code(), result.statusCode());
 
         }).end(new JsonObject()
