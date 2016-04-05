@@ -72,25 +72,32 @@
             is: 'user-panel',
             ready: function () {
                 this.page = 0;
+
+                if (application.preset)
+                    this.load({id: application.id, key: application.key});
+                else
+                    application.subscribe('card-event', this.load);
+            },
+
+            load: function (event) {
                 var self = this;
 
-                application.subscribe('card-event', function (event) {
-                    $.ajax({
-                        type: "GET",
-                        url: "/api/metadata/" + event.id,
-                        contentType: "application/json; charset=utf-8",
-                        success: function (data) {
-                            data = JSON.parse(data);
+                $.ajax({
+                    type: "GET",
+                    url: "/api/metadata/" + event.id,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        data = JSON.parse(data);
 
-                            self.id = data.id;
-                            self.topic = data.topic;
+                        self.id = data.id;
+                        self.topic = data.topic;
 
-                            application.publish('vote-loaded', data);
-                        },
-                        error: function (data) {
-                            // show modal big failure lel
-                        }
-                    });
+                        console.log(data);
+                        application.publish('vote-loaded', data);
+                    },
+                    error: function (data) {
+                        //
+                    }
                 });
             }
         });

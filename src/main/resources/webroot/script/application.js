@@ -6,6 +6,7 @@ var application = {
     handlers: {},
     key: "",
     id: "",
+    preset: false,
 
     subscribe: function (event, callback) {
         if (this.handlers[event] == null)
@@ -35,5 +36,10 @@ application.subscribe('vote-event', function () {
 });
 
 $(document).ready(function () {
-    $('#user-panel').hide();
+    if ($.cookie("vote.id") != "") {
+        application.preset = true;
+        application.id = $.cookie("vote.id");
+        application.key = $.cookie("vote.key");
+    } else
+        $('#user-panel').hide();
 });

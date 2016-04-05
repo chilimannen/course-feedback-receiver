@@ -40,8 +40,10 @@
             is: 'card-entry',
 
             ready: function () {
-                this.$['dialog-key'].toggle();
                 var self = this;
+
+                if (!application.preset)
+                    this.$['dialog-key'].toggle();
 
                 application.subscribe('vote-event', function () {
                     setTimeout(function () {
@@ -49,6 +51,7 @@
                     }, 3500);
                 });
             },
+
 
             add: function (e) {
                 if (e.keyCode == 13) {
